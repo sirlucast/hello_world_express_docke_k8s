@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod # El kind puede ser Service, Deployment, Job, etc.
+metadata:
+  name: pod-express-js # Nombre del pod
+  labels:
+    # etiquetas asignadas al pod.
+    # Aqui se pueden crear las etiquetas que se
+    # estimen conveniente con estilo llave:valor.
+    tipo: tipo-pod
+spec:
+  #Se especifican los contenedores a utilizar
+  containers:
+    - name: pod-express-container
+      image: hello-world-express
+      imagePullPolicy: Never
+      ports:
+        - name: web
+          containerPort: 3000
+          protocol: TCP

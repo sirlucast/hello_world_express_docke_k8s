@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-deploy
+  labels:
+    tipo: tipo-pod
+spec:
+  replicas: 3
+  selector:
+    #Estas etiquetas identifican a los pods asociados a este deployment
+    matchLabels:
+      tipo: tipo-pod
+  template:
+    # Este es un PodTemplate
+    metadata:
+      labels:
+        tipo: tipo-pod 
+    spec:
+      containers:
+        - name: pod-express-container
+          image: hello-world-express
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
