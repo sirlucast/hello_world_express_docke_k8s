@@ -1,0 +1,44 @@
+# Configuración usando solo un archivo yml.
+
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-deploy
+  labels:
+    tipo: tipo-pod
+spec:
+  replicas: 3
+  selector:
+    #Estas etiquetas identifican a los pods asociados a este deployment
+    matchLabels:
+      tipo: tipo-pod
+  template:
+    # Este es un PodTemplate
+    metadata:
+      labels:
+        tipo: tipo-pod 
+    spec:
+      containers:
+        - name: pod-express-container
+          image: hello-world-express
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+
+...
+
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-service
+spec:
+  ports:
+    - name: http-port
+      port: 80
+      targetPort: 3000
+  selector:
+    tipo: tipo-pod
+  type: LoadBalancer
+
